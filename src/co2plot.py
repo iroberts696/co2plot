@@ -51,8 +51,8 @@ def main(args):
             continue
         if len(used_locations) != 0:
             used_str = [str(i) for i in used_locations]
-            USED = " ".join(used_str)
-            print("Locations already used ["+USED+"]")
+            used = " ".join(used_str)
+            print("Locations already used ["+used+"]")
 
         location = get_location(humandate)
         used_locations.append(location)
@@ -82,15 +82,15 @@ def main(args):
 
             try:
                 maxc02 = working_hours['CO₂(ppm)'].max()
-                CO2LIMIT = int(maxc02+0.1*maxc02)
+                co2limit = int(maxc02+0.1*maxc02)
             except:
-                CO2LIMIT = 2000
+                co2limit = 2000
 
-            if CO2LIMIT < 1500:
-                CO2LIMIT = 2000
+            if co2limit < 1500:
+                co2limit = 2000
 
             figure.add_hrect(
-                xref="paper", y0=1500, y1=CO2LIMIT, yref="y",
+                xref="paper", y0=1500, y1=co2limit, yref="y",
                 fillcolor="red", opacity=0.25,
                 layer="below", line_width=0,
             )
@@ -116,8 +116,8 @@ def main(args):
     print(os.path.basename(__file__))
     if len(used_locations) != 0:
         used_str = [str(i) for i in used_locations]
-        USED = " ".join(used_str)
-        print("Created graphs for ["+USED+"]\n\tThese can be found in [" +
+        used = " ".join(used_str)
+        print("Created graphs for ["+used+"]\n\tThese can be found in [" +
               outdir+"] in directory containg the CSV file")
 
 
@@ -166,7 +166,8 @@ if __name__ == "__main__":
     """ This is executed when run from the command line """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('filename', type=argparse.FileType('r'))
+    parser.add_argument('csv_data_file', type=argparse.FileType('r'),
+                        help='Name of file containing aranet4 csv data')
     parser.add_argument('--nocheck', nargs='?', const=True, default=False,
                         help='If [--nocheck] set locations will not be confirmed')
 
