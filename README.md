@@ -1,5 +1,16 @@
 # co2plot
-script to plot csv data derived from an Aranet4 CO2 sensor / logger
+
+python3 script to plot csv data derived from an Aranet4 CO2 sensor / logger
+
+## dependencies
+
+pip install pandas
+
+pip install plotly_express
+
+pip install -U kaleido
+
+## command and options
 
 usage: co2plot.py [-h] [--nocheck [NOCHECK]] [--allweek [ALLWEEK]] [--imgformat [{png,jpg,webp,svg,pdf}]]
                   [--graphtype [{CO₂ppm),Temperature(C),Humidity(%),Pressure(hPa}]] [--start_time [START_TIME]] [--end_time [END_TIME]]
