@@ -156,16 +156,16 @@ def get_location(rundate):
 
     ''' Get location of data recording for a rundate'''
     while True:
-        llocation = input(
+        location = input(
             "Please enter location for readings on ["+rundate+"]: ")
-        if len(llocation) >= 3 and confirm_location(llocation, rundate):
-            return llocation
+        if len(location) >= 3 and confirm_location(location, rundate):
+            return location
 
 # main
 if __name__ == "__main__":
-    """ This is executed when run from the command line """
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser( 
+        description='\na script to plot CSV data from an Aranet4 device')
     parser.add_argument('csv_data_file', type=argparse.FileType('r'),
                         help='Name of file containing aranet4 csv data')
     parser.add_argument('--nocheck', nargs='?', const=True, default=False,
