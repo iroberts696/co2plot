@@ -95,7 +95,7 @@ def main(args):
                 layer="below", line_width=0,
             )
             figure.add_hrect(
-                xref="paper", y0=750, y1=1500, yref="y",
+                xref="paper", y0=800, y1=1500, yref="y",
                 fillcolor="Yellow", opacity=0.25,
                 layer="below", line_width=0,
             )
