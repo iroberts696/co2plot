@@ -17,7 +17,8 @@ import os.path
 import sys
 import click
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
+from matplotlib import dates as mpl_dates
 
 def main(args):
     """ Main entry point of the app """
@@ -69,15 +70,17 @@ def main(args):
         todays = sensor_csv_data.iloc[reading_start_idx:reading_end_idx]
 
         working_hours = todays.between_time(args.start_time, args.end_time)
+        
+        working_hours.plot( y=args.graphtype ) 
 
-        figure = px.line(working_hours,
-                         y=args.graphtype,
-                         title='Room: ['+location+'] '+args.graphtype +
-                         '/Time on '+str(reading_date)+' ( from '+infile+')',
-                         ).update_traces(line_color='darkblue')
+        date_format = mpl_dates.DateFormatter('%H:%m')
+        #fig, ax = plt.subplots()
+        plt.gca().xaxis.set_major_formatter(date_format)
+        plt.margins(0)
+        plt.title(str(reading_date)+' '+location, loc='left')
 
-        figure.update_layout(xaxis_title="Time",  xaxis_tickformat='%H:%M')
 
+        
         if args.graphtype == 'CO₂(ppm)':
 
             try:
@@ -89,28 +92,16 @@ def main(args):
             if co2limit < 1500:
                 co2limit = 2000
 
-            figure.add_hrect(
-                xref="paper", y0=1500, y1=co2limit, yref="y",
-                fillcolor="red", opacity=0.25,
-                layer="below", line_width=0,
-            )
-            figure.add_hrect(
-                xref="paper", y0=800, y1=1500, yref="y",
-                fillcolor="Yellow", opacity=0.25,
-                layer="below", line_width=0,
-            )
+            plt.axhspan(0, 800, facecolor='green', alpha=0.5)
+            plt.axhspan(800, 1500, facecolor='yellow', alpha=0.5)
+            plt.axhspan(1500, co2limit, facecolor='red', alpha=0.5)
+       
+        plt.savefig(outdir+'/'+
+                    location+'-'+
+                    args.graphtype+'-' +
+                    str(reading_date)+
+                    '.'+args.imgformat)
 
-            figure.add_hrect(
-                xref="paper", y0=0, y1=750, yref="y",
-                fillcolor="Green", opacity=0.25,
-                layer="below", line_width=0,
-            )
-
-        figure.write_image(outdir+'/'+
-                           location+'-'+
-                           args.graphtype+'-' +
-                           str(reading_date)+
-                           '.'+args.imgformat)
 
     click.clear()
     print(os.path.basename(__file__))
@@ -130,7 +121,7 @@ def confirm_use_date(rundate):
     if reply[0] == 'n':
         return False
 
-    return confirm_use_date("Uhhhh... please enter ", rundate)
+    return confirm_use_date( rundate)
 
 
 def confirm_location(llocation, rundate):
