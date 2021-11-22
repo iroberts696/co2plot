@@ -2,13 +2,7 @@
 
 python3 script to plot csv data derived from an Aranet4 CO2 sensor / logger
 
-## dependencies
 
-pip install pandas
-
-pip install plotly_express
-
-pip install -U kaleido
 
 ## command and options
 
