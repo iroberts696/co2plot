@@ -26,3 +26,7 @@ will produce a directory named after the CSV file containg png plots of CO2
 ## Windows Users
 
 There is an exe in the dist folder produced vy pyinstaller and allows plotting without installation of python 
+
+## Example output
+![Room One CO2 plot](https://github.com/iroberts696/co2plot/blob/main/testdata/01/Room%20One-CO%E2%82%82(ppm)-2021-10-07.png)
+![Room Two CO2 plot](https://github.com/iroberts696/co2plot/blob/main/testdata/01/Room%20Two-CO%E2%82%82(ppm)-2021-10-08.png)
